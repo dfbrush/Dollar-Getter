@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import * 
 from colors import *
 
-#Class that creates and modifys text for start and end screen
+#Class that creates and modifies text for start and end screen
 class Text(pygame.sprite.Sprite):
 
 #Design of text and how it will be updated and created
