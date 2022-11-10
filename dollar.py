@@ -2,8 +2,10 @@ import pygame, random, math
 from pygame.locals import * 
 from colors import *
 
+#Class that creates and modifys dollars 
 class Dollar(pygame.sprite.Sprite):
 
+  #Dictates the actual design of the dollar and its interactions
   def __init__(self):
     super().__init__()
     size = (width,height) = (600,500)
@@ -15,7 +17,7 @@ class Dollar(pygame.sprite.Sprite):
     self.rect.center = [width//2,height//2]
     self.speed = [random.randint(-5,5),random.randint(-5,5)]
 
-
+#Function that reappears a dollar on the screen if clicked
   def handle_click(self,x,y):
     if self.rect.collidepoint(x,y):
         rand_x = random.randint(self.rect.width//2,500-self.rect.width//2)
@@ -26,7 +28,7 @@ class Dollar(pygame.sprite.Sprite):
       
     return False
       
-
+#Sets limits as to where the dollar can move
   def update(self):
     if self.rect.right - 20 > 670:
       self.speed[0] *= -1
