@@ -24,7 +24,6 @@ screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("Times New Roman",30)
 
-#create sprite groups
 dollars = pygame.sprite.Group()
 
 #Keeps track of the dollars clicked by the user and frequency
@@ -32,10 +31,21 @@ dollars_clicked = 0
 seconds = 0
 dollars_click_rate = 0
 
+#Function that dictates what is shown at the end screen
 def end_screen():
-  overt_text = font.render("Congratulations! You woke up from your dream and got $100!", True, PRUSSIAN_BLUE)
-  screen.blit = (overt_text, (width//2,180))
+  screen.fill(PRUSSIAN_BLUE)
+  over_text = font.render("Time in seconds: " + str(seconds), True, RED)
+  overt_text = font.render("Congratulations! You woke up from your", True, RED)
+  overte_text = font.render("dream and won $100!", True, RED)
+  under_text = font.render("Dollars Per Second: " + str(dollars_click_rate), True, RED)
+  screen.blit(over_text, (10,100))
+  screen.blit(overt_text, (10,200))
+  screen.blit(overte_text, (10,250))
+  screen.blit(under_text, (10,350))
+  
+  pygame.display.update()
 
+#Sets up the main screen and implements trackers, variables, and events
 def main():
   global dollars_clicked, seconds, dollars_click_rate
 
@@ -46,7 +56,6 @@ def main():
   dc_text = Text([width//2,100],"Dollars: 0")
   seconds_text = Text([width//2,200],"Time Passed: 0")
   dcr_text = Text([width//2,300],"Dollars Per Second: 0")
- # final_text = Text([width//2,180],"Congratulations! You woke up from your dream and got $100!")
  
   global screen, clock,size
   
@@ -66,11 +75,9 @@ def main():
         x,y = pygame.mouse.get_pos()
         for dollar in dollars:
           if dollar.handle_click(x,y):
-            dollars_clicked += 10
-
-          if dollars_clicked >= 100:
-            end_screen()
-            break
+            dollars_clicked += addition
+          if dollars_clicked % 10 == 0:
+            dollars_clicked += 2  
             
       if event.type == KEYDOWN:
         if event.key == K_f:
@@ -78,12 +85,9 @@ def main():
         if event.key == K_d:
           screen = pygame.display.set_mode(size)
     
-    # score_text = font.render("Clicks: {}".format(clicks),True,WHITE,RED)
-    
     dc_text.update_text("Dollars: {}",dollars_clicked)
     seconds_text.update_text("Time Passed: {}",seconds)
     dcr_text.update_text("Dollars Per Second: {}",dollars_click_rate)
-   
     
     dollars.update()
     
@@ -96,6 +100,10 @@ def main():
     dollars.draw(screen)
 
     pygame.display.flip()
+
+    if dollars_clicked >= 100:
+            end_screen()
+            break
 
 if __name__ == "__main__":
   main()
